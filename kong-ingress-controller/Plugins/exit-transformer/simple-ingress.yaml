@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+ name: exit-transformer-route
+ annotations:
+   kubernetes.io/ingress.class: kong
+   konghq.com/plugins: exit-ex
+spec:
+ rules:
+ - http:
+     paths:
+     - path: /exit
+       backend:
+         serviceName: echo
+         servicePort: 80

@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+ name: demo
+ annotations:
+   kubernetes.io/ingress.class: kong
+  #  konghq.com/plugins: ip-route-plugin, cors-plugin
+  #  konghq.com/override: "sample-customization"
+spec:
+ rules:
+ - http:
+     paths:
+     - path: /echo
+       backend:
+         serviceName: echo
+         servicePort: 80
+ - http:
+     paths:
+     - path: /httpbin
+       backend:
+         serviceName: httpbin
+         servicePort: 8000

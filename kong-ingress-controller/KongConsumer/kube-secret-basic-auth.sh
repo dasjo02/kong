@@ -1,0 +1,1 @@
+kubectl create secret generic uid-pw  --from-literal=kongCredType=basic-auth  --from-literal=username=daz --from-literal=password=kong -n cre

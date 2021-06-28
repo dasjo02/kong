@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo
+  annotations:
+    kubernetes.io/ingress.class: "kong"
+spec:
+  ingressClassName: kong
+  tls:
+  - hosts:
+      - tls.konghq.com
+    secretName: tls-secret
+  rules:
+  - host: tls.konghq.com
+    http:
+      paths:
+      - path: /foo
+        pathType: Exact                                #/foo only, equal to /foo$
+        #pathType: Prefix                               #/foo and foo/xyz but NOT /foo123  
+        #pathType: ImplementationSpecific                # same as definding /foo - /foo*
+        backend: 
+          service: 
+            name: echo
+            port:
+              number: 80
+  defaultBackend:
+    service:
+        name: hello-world-service-single
+        port: 
+            number: 80

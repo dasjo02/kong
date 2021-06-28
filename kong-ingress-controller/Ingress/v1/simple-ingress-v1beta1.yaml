@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+ name: demo
+ annotations:
+   kubernetes.io/ingress.class: kong
+spec:
+ rules:
+ - http:
+     paths:
+     - path: /echo
+       backend:
+         serviceName: echo
+         servicePort: 80
+ backend:
+   serviceName: kong
+   servicePort: 80

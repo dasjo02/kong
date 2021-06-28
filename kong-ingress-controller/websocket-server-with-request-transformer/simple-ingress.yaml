@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+ name: websocket-route
+ annotations:
+   kubernetes.io/ingress.class: kong
+   konghq.com/plugins: req-transformer
+spec:
+ rules:
+ - http:
+     paths:
+     - path: /(?<version>\w+)
+       backend:
+         serviceName: websocket-svc
+         servicePort: 9998

@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: kong
+spec:
+  controller: ingress-controllers.konghq.com/kong
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: v1demo
+spec:
+  ingressClassName: kong
+  rules:
+  - http:
+      paths:
+      - path: /foo
+        pathType: Exact                                
+        #pathType: Prefix                               
+        #pathType: ImplementationSpecific               
+        backend: 
+          service: 
+            name: echo
+            port:
+              number: 80
+  defaultBackend:
+    service:
+        name: kong
+        port: 
+            number: 80

@@ -1,0 +1,14 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: ip-route-plugin
+  annotations:
+    kubernetes.io/ingress.class: kong
+config: 
+  allow:
+  - 34.83.172.216
+  - 10.138.0.58
+  - 174.7.100.189
+  - 143.1.0.0/24
+  - 192.168.99.0/24
+plugin: ip-restriction

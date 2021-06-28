@@ -1,0 +1,34 @@
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: websocketd
+#   labels:
+#     name: websocketd
+# spec:
+#   containers:
+#   - name: websocketd
+#     image: partlab/ubuntu-websocketd
+#     command: ["websocketd"]
+#     args: ["--port=9999","ls"]
+# ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: websocketd-deployment
+  labels:
+    app: websocketd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: websocketd
+  template:
+    metadata:
+      labels:
+        app: websocketd
+    spec:
+      containers:
+      - name: websocketd
+        image: partlab/ubuntu-websocketd
+        command: ["websocketd"]
+        args: ["--port=9998","/bin/sleep", "10000"]

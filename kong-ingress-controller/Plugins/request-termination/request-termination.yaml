@@ -1,0 +1,8 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: req-term
+config: 
+  status_code: 200
+  message: '{"Success": "Thanks for playing spin the Kube"}'
+plugin: request-termination

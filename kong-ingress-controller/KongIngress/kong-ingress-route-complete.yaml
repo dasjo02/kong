@@ -1,0 +1,77 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongIngress
+metadata:
+  name: sample-customization
+route:
+  methods:
+   - GET
+   - POST
+   - PUT
+  protocols: 
+    - http
+    - https
+  strip_path: false
+  https_redirect_status_code: 302
+  regex_priority: 99
+  preserve_host: false
+  path_handling: v1
+  headers:
+    server:
+    - value1
+  snis:
+  - daz
+upstream: 
+  name: k8s-test-upstream
+  algorithm: least-connections
+  hash_on: header
+  hash_fallback: none
+  hash_on_header: my-header
+  slots: 5000
+  healthchecks: 
+    active:
+      https_verify_certificate: true
+      unhealthy: 
+        http_statuses: 
+        - 429
+        - 404
+        - 499
+        tcp_failures: 1
+        timeouts: 2
+        http_failures: 4
+        interval: 3
+      httpp_path: "/"
+      timeout: 15
+      healthy: 
+        http_statuses: 
+        - 200
+        - 302
+        - 304
+        interval: 2
+        successess: 2
+      https_sni: kongfu
+      concurrency: 10
+      type: https
+    passive: 
+      unhealthy: 
+        http_failures: 0
+        http_statuses: 
+        - 429
+        - 500
+        - 503
+        tcp_failures: 0
+        timeouts: 0
+      type: http
+      healthy: 
+        sucesses: 0
+        http_statuses: 
+        - 200
+        - 201
+        - 302
+    threshold: 0
+  tags: 
+  - tagname
+  host_header: x.konghq.com
+  client_certificate: 
+    id: caa21048-a5f8-413e-8d2c-b02d741a9127
+proxy: 
+  path: /bar/

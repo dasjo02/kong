@@ -1,0 +1,13 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongIngress
+metadata:
+  name: strip-path
+route:
+  methods:
+   - GET
+   - POST
+   - PUT
+  protocols: 
+    - http
+    - https
+  strip_path: true
